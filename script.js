@@ -78,7 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const confetti = document.createElement("div");
     confetti.className = "confetti";
     confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+   const colors = ["#0E112A", "#060505", "#4A4E69", "#1B1B2F", "#9AA0A6"];
+confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     confetti.style.animationDelay = Math.random() * 2 + "s";
     document.body.appendChild(confetti);
 
