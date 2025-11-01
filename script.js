@@ -64,6 +64,29 @@ document.addEventListener("DOMContentLoaded", function () {
     if (blownOut > 0) {
       updateCandleCount();
     }
+    if (blownOut > 0) {
+  updateCandleCount();
+
+  // 🟣 Make the phone vibrate
+  if (navigator.vibrate) {
+    navigator.vibrate(300); // vibrates for 0.3s
+  }
+
+  // 🎉 Confetti effect
+  const confettiCount = 150;
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    confetti.style.animationDelay = Math.random() * 2 + "s";
+    document.body.appendChild(confetti);
+
+    // Remove confetti after animation
+    setTimeout(() => confetti.remove(), 4000);
+  }
+}
+
   }
 
   if (navigator.mediaDevices.getUserMedia) {
