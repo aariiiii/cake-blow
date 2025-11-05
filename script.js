@@ -89,22 +89,33 @@ confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length
 }
 
   }
+// ---- mic bootstrap via user gesture ----
+function startBlowDetection(stream) {
+  audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioContext.createAnalyser();
+  microphone = audioContext.createMediaStreamSource(stream);
+  analyser.fftSize = 256;
+  microphone.connect(analyser);
 
-  if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then(function (stream) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioContext.createAnalyser();
-        microphone = audioContext.createMediaStreamSource(stream);
-        microphone.connect(analyser);
-        analyser.fftSize = 256;
-        setInterval(blowOutCandles, 200);
-      })
-      .catch(function (err) {
-        console.log("Unable to access microphone: " + err);
-      });
-  } else {
-    console.log("getUserMedia not supported on your browser!");
-  }
-});
+  // keep your existing blow check timing
+  setInterval(blowOutCandles, 200);
+}
+
+const startMicButton = document.getElementById('startMic');
+if (startMicButton && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  startMicButton.addEventListener('click', async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      startMicButton.classList.add('hidden'); // hide the button
+      startBlowDetection(stream);
+      console.log('🎤 mic active');
+    } catch (err) {
+      console.error('Mic permission error:', err);
+      alert('Please allow microphone access to blow the candle 🎂');
+    }
+  });
+} else {
+  console.log('getUserMedia not supported on this browser');
+}
+
+ 
