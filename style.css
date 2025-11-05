@@ -201,5 +201,17 @@ body {
     transform: translateY(110vh) rotate(720deg);
     opacity: 0;
   }
+  #startMic{
+  margin:12px auto 8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:none;
+  background:#ffcf6e;
+  color:#222;
+  font-weight:600;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
 }
+#startMic.hidden{ display:none; }
+}
+
 
